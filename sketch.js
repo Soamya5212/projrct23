@@ -31,7 +31,7 @@ function setup() {
 	engine = Engine.create();
 	world = engine.world;
 
-	packageBody = Bodies.circle(width/2 , 200 , 5 , {restitution:0.4, isStatic:false});
+	packageBody = Bodies.circle(width/2 , 200 , 5 , {isStatic:true});
 	World.add(world, packageBody);
 	
 
@@ -41,9 +41,6 @@ function setup() {
 
  	boxPosition=width/2-100
  	boxY=610;
-
-	 Engine.run(engine);
-	 
 
 
  	boxleftSprite=createSprite(boxPosition, boxY, 20,100);
@@ -73,26 +70,37 @@ function setup() {
 function draw() {
   rectMode(CENTER);
   background(0);
-  if(keyDown("left")){
-	helicopterSprite.x-=6;
-  }
-
-  
-  if(keyDown("right")){
-	helicopterSprite.x+=6;
-  }
-
-  if(keyDown("down")){
-	packageSprite.y=2;
-  }
-
+ 
   packageSprite.x= packageBody.position.x 
   packageSprite.y= packageBody.position.y 
 
- 
   
   drawSprites();
   
   
+ 
 }
 
+
+function keyPressed() {
+	if (keyCode === DOWN_ARROW) {
+	   // Look at the hints in the document and understand how to make the package body fall only on press of the Down arrow key.
+	   Matter.Body.setStatic(packageBody,false);
+	   
+	 }
+	 if (keyCode === LEFT_ARROW) {
+		// Look at the hints in the document and understand how to make the package body fall only on press of the Down arrow key.
+		helicopterSprite.x = helicopterSprite.x - 20;
+		translation = {x:-20, y:0}
+		matter.Body.translate(packageBody, translation);
+		
+	  }
+	  if (keyCode === RIGHT_ARROW) {
+		// Look at the hints in the document and understand how to make the package body fall only on press of the Down arrow key.
+		helicopterSprite.x = helicopterSprite.x + 20;
+		translation = {x:20, y:0}
+		matter.Body.translate(packageBody, translation);
+
+	  }
+	  
+   }
